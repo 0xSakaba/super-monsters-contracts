@@ -23,12 +23,21 @@ const config: HardhatUserConfig = {
     apiKey: {
       alfajores: "empty",
       "soneium-minato": "empty",
+      soneium: "empty",
       optimismSepolia: vars.get("SEPOLIA_OP_ETHERSCAN_API_KEY"),
       sepolia: vars.get("ETHERSCAN_API_KEY"),
       baseSepolia: vars.get("BASE_SEPOLIA_ETHERSCAN_API_KEY"),
       polygonAmoy: vars.get("AMOY_ETHERSCAN_API_KEY"),
     },
     customChains: [
+      {
+        network: "soneium",
+        chainId: 1868,
+        urls: {
+          apiURL: "https://soneium.blockscout.com/api",
+          browserURL: "https://soneium.blockscout.com",
+        },
+      },
       {
         network: "soneium-minato",
         chainId: 1946,
@@ -72,6 +81,11 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
+    soneium: {
+      url: "https://rpc.soneium.org",
+      chainId: 1868,
+      accounts: [vars.get("INITIAL_OWNER_PRIVATE_KEY")],
+    },
     "soneium-minato": {
       url: "https://rpc.minato.soneium.org/",
       chainId: 1946,

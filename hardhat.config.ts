@@ -22,6 +22,7 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: {
       alfajores: "empty",
+      "soneium-minato": "empty",
       optimismSepolia: vars.get("SEPOLIA_OP_ETHERSCAN_API_KEY"),
       sepolia: vars.get("ETHERSCAN_API_KEY"),
       baseSepolia: vars.get("BASE_SEPOLIA_ETHERSCAN_API_KEY"),
@@ -71,6 +72,11 @@ const config: HardhatUserConfig = {
     ],
   },
   networks: {
+    "soneium-minato": {
+      url: "https://rpc.minato.soneium.org/",
+      chainId: 1946,
+      accounts: [vars.get("INITIAL_OWNER_PRIVATE_KEY")],
+    },
     polygonAmoy: {
       url: "https://rpc-amoy.polygon.technology/",
       accounts: [vars.get("INITIAL_OWNER_PRIVATE_KEY")],

@@ -1,10 +1,12 @@
 import hre from "hardhat";
 import { sepolia_verify_address } from "../const";
 
+const arg1 =
+  "ipfs://bafkreidhsz4oudhuy3oz56quuqkvq4twnoetdsyc43vqwqmxyfzwarej7i";
 async function main() {
   await hre.run("verify:verify", {
-    address: sepolia_verify_address,
-    // constructorArguments: [arg1, arg2],
+    address: "0xB887899Bc9B7563ffa7d5421d5b8Cf3B43cCC8Cf",
+    constructorArguments: [arg1],
   });
 }
 

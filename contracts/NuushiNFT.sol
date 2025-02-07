@@ -14,7 +14,7 @@ contract NuushiNFT is ERC721Enumerable, Ownable {
     uint256 public constant MAX_SUPPLY = 999999;
 
     uint256 public immutable startTimestamp;
-    uint256 public immutable endTimestamp;
+    uint256 public endTimestamp;
 
     string private _baseTokenURI;
 
@@ -24,7 +24,7 @@ contract NuushiNFT is ERC721Enumerable, Ownable {
         string memory baseTokenURI
     ) ERC721("Introducing NUU$HI", "NUUSHI") Ownable(msg.sender) {
         startTimestamp = block.timestamp;
-        endTimestamp = block.timestamp + 2 weeks;
+        endTimestamp = 1740700799;
 
         _baseTokenURI = baseTokenURI;
     }
@@ -70,5 +70,12 @@ contract NuushiNFT is ERC721Enumerable, Ownable {
      */
     function withdraw() external onlyOwner {
         payable(owner()).transfer(address(this).balance);
+    }
+
+    /**
+     * @dev owner can set the end timestamp
+     */
+    function setEndTimestamp(uint256 _setEndTimestamp) external onlyOwner {
+        endTimestamp = _setEndTimestamp;
     }
 }

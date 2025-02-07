@@ -29,21 +29,12 @@ describe("NuushiNFT", function () {
     expect(await NuushiNFT.totalSupply()).to.equal(1);
   });
 
-  it("Should not mint NFTs after the sale period", async function () {
-    await hre.ethers.provider.send("evm_increaseTime", [
-      2 * 7 * 24 * 60 * 60 + 1,
-    ]); // Increase time by 2 weeks + 1 second
-    await hre.ethers.provider.send("evm_mine", []);
-    await expect(
-      NuushiNFT.connect(addr1).mint(1, {
-        value: hre.ethers.parseEther("0.000777"),
-      })
-    ).to.be.revertedWith("Sale has ended");
-  });
-
   it("Should not mint NFTs exceeding the maximum supply", async function () {
-    await hre.ethers.provider.send("evm_increaseTime", [1]); // Increase time by 1 second
+    const newTimestamp = 1740700700;
+
+    await hre.ethers.provider.send("evm_setNextBlockTimestamp", [newTimestamp]);
     await hre.ethers.provider.send("evm_mine", []);
+
     await expect(
       NuushiNFT.connect(addr1).mint(1000000, {
         value: hre.ethers.parseEther("777"),
@@ -52,8 +43,6 @@ describe("NuushiNFT", function () {
   });
 
   it("Should not mint NFTs with insufficient ETH", async function () {
-    await hre.ethers.provider.send("evm_increaseTime", [1]); // Increase time by 1 second
-    await hre.ethers.provider.send("evm_mine", []);
     await expect(
       NuushiNFT.connect(addr1).mint(1, {
         value: hre.ethers.parseEther("0.0001"),
@@ -63,8 +52,7 @@ describe("NuushiNFT", function () {
 
   it("Should allow the owner to set the base URI", async function () {
     await NuushiNFT.connect(owner).setBaseURI("https://newexample.com/");
-    await hre.ethers.provider.send("evm_increaseTime", [1]); // Increase time by 1 second
-    await hre.ethers.provider.send("evm_mine", []);
+
     await NuushiNFT.connect(addr1).mint(1, {
       value: hre.ethers.parseEther("0.000777"),
     });
@@ -72,8 +60,6 @@ describe("NuushiNFT", function () {
   });
 
   it("Should allow the owner to withdraw the contract balance", async function () {
-    await hre.ethers.provider.send("evm_increaseTime", [1]); // Increase time by 1 second
-    await hre.ethers.provider.send("evm_mine", []);
     await NuushiNFT.connect(addr1).mint(1, {
       value: hre.ethers.parseEther("0.000777"),
     });
@@ -85,5 +71,21 @@ describe("NuushiNFT", function () {
       await owner.getAddress()
     );
     expect(finalBalance).to.be.above(initialBalance);
+  });
+
+  it("Should not mint NFTs after the sale period", async function () {
+    // const block = await hre.ethers.provider.getBlock("latest");
+    // console.log("Block timestamp:", block?.timestamp);
+
+    const newTimestamp = 1740700799;
+
+    await hre.ethers.provider.send("evm_setNextBlockTimestamp", [newTimestamp]);
+    await hre.ethers.provider.send("evm_mine", []);
+
+    await expect(
+      NuushiNFT.connect(addr1).mint(1, {
+        value: hre.ethers.parseEther("0.000777"),
+      })
+    ).to.be.revertedWith("Sale has ended");
   });
 });

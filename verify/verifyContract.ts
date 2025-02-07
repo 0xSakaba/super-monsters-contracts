@@ -5,7 +5,7 @@ const arg1 =
   "ipfs://bafkreidhsz4oudhuy3oz56quuqkvq4twnoetdsyc43vqwqmxyfzwarej7i";
 async function main() {
   await hre.run("verify:verify", {
-    address: "0xB887899Bc9B7563ffa7d5421d5b8Cf3B43cCC8Cf",
+    address: "0xC361e1E7E59F2430F4e098AA614d6EF999261dB1",
     constructorArguments: [arg1],
   });
 }

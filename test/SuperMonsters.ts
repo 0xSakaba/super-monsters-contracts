@@ -24,7 +24,7 @@ describe("SuperMonsters", function () {
   });
 
   it("Should not allow minting before the sale period", async function () {
-    const startTimestamp = 1744070400;
+    const startTimestamp = new Date("2025-04-08 00:00:00Z").getTime() / 1000;
 
     expect(
       (await time.latest()) < startTimestamp,
@@ -39,7 +39,7 @@ describe("SuperMonsters", function () {
   });
 
   it("Should mint NFTs within the sale period", async function () {
-    const newTimestamp = 1744070400;
+    const newTimestamp = new Date("2025-04-08 00:00:01Z").getTime() / 1000;
     await hre.ethers.provider.send("evm_setNextBlockTimestamp", [newTimestamp]);
     await hre.ethers.provider.send("evm_mine", []);
     await SuperMonsters.connect(addr1).mint(1, {
@@ -88,7 +88,7 @@ describe("SuperMonsters", function () {
   });
 
   it("Should not mint NFTs after the sale period", async function () {
-    const newTimestamp = 1744243201;
+    const newTimestamp = new Date("2025-05-10 00:00:01Z").getTime() / 1000;
 
     await hre.ethers.provider.send("evm_setNextBlockTimestamp", [newTimestamp]);
     await hre.ethers.provider.send("evm_mine", []);

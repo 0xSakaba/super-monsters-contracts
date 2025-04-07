@@ -33,7 +33,7 @@ describe("SuperMonsters", function () {
 
     await expect(
       SuperMonsters.connect(addr1).mint(1, {
-        value: hre.ethers.parseEther("0.0021"),
+        value: hre.ethers.parseEther("0.0012"),
       })
     ).to.be.revertedWith("Sale has not started");
   });
@@ -43,7 +43,7 @@ describe("SuperMonsters", function () {
     await hre.ethers.provider.send("evm_setNextBlockTimestamp", [newTimestamp]);
     await hre.ethers.provider.send("evm_mine", []);
     await SuperMonsters.connect(addr1).mint(1, {
-      value: hre.ethers.parseEther("0.0021"),
+      value: hre.ethers.parseEther("0.0012"),
     });
     expect(await SuperMonsters.totalSupply()).to.equal(1);
   });
@@ -51,7 +51,7 @@ describe("SuperMonsters", function () {
   it("Should not mint NFTs exceeding the maximum supply", async function () {
     await expect(
       SuperMonsters.connect(addr1).mint(100_001, {
-        value: hre.ethers.parseEther("210.0021"),
+        value: hre.ethers.parseEther("120.0012"),
       })
     ).to.be.revertedWith("Exceeds MAX_SUPPLY");
   });
@@ -68,14 +68,14 @@ describe("SuperMonsters", function () {
     await SuperMonsters.connect(owner).setBaseURI("https://newexample.com/");
 
     await SuperMonsters.connect(addr1).mint(1, {
-      value: hre.ethers.parseEther("0.0021"),
+      value: hre.ethers.parseEther("0.0012"),
     });
     expect(await SuperMonsters.tokenURI(1)).to.equal("https://newexample.com/");
   });
 
   it("Should allow the owner to withdraw the contract balance", async function () {
     await SuperMonsters.connect(addr1).mint(1, {
-      value: hre.ethers.parseEther("0.0021"),
+      value: hre.ethers.parseEther("0.0012"),
     });
     const initialBalance = await hre.ethers.provider.getBalance(
       await owner.getAddress()

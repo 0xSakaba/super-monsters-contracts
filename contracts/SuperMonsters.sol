@@ -9,9 +9,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * @title NuushiNFT
  * @dev An example of an open edition NFT contract for 2 weeks.
  */
-contract NuushiNFT is ERC721Enumerable, Ownable {
-    uint256 public constant MINT_PRICE = 0.000777 ether;
-    uint256 public constant MAX_SUPPLY = 999999;
+contract SuperMonsters is ERC721Enumerable, Ownable {
+    uint256 public constant MINT_PRICE = 0.0021 ether;
+    uint256 public constant MAX_SUPPLY = 100_000;
 
     uint256 public immutable startTimestamp;
     uint256 public endTimestamp;
@@ -22,10 +22,9 @@ contract NuushiNFT is ERC721Enumerable, Ownable {
 
     constructor(
         string memory baseTokenURI
-    ) ERC721("Introducing NUU$HI", "NUUSHI") Ownable(msg.sender) {
-        startTimestamp = block.timestamp;
-        endTimestamp = 1740700799;
-
+    ) ERC721("Super Monsters", "SMT") Ownable(msg.sender) {
+        startTimestamp = 1744070400;
+        endTimestamp = 1744243200;
         _baseTokenURI = baseTokenURI;
     }
 

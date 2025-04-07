@@ -23,7 +23,7 @@ contract SuperMonsters is ERC721Enumerable, Ownable {
     constructor(
         string memory baseTokenURI
     ) ERC721("Super Monsters", "SMT") Ownable(msg.sender) {
-        startTimestamp = 1744070400;
+        startTimestamp = 1743951600;
         endTimestamp = 1744243200;
         _baseTokenURI = baseTokenURI;
     }
